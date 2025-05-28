@@ -1,39 +1,36 @@
 {% load static %}
 <div class="pitcher-card">
-    {% if pitcher %}
-        <div class="">
-            <div class="player-image-container">
-                <img src="/static/images/players/{{ pitcher.player_id }}.jpg"
-                alt="{{ pitcher.player_name }}" 
+    <div class="card-layout-vertical">
+        <div class="flex justify-center">
+            <img src="https://sports-phinf.pstatic.net/player/kbo/default/{{ lineup.pitcher.player_id }}.png?type=w150"
+                alt="{{ lineup.pitcher.player_name }}" 
                 class="player-image">
+        </div>
+        <div class="player-info">
+            <p class="player-name">{{ lineup.pitcher.player_name }}</p>
+        </div>
+        <div class="stats-container">
+            <div class="stat-item">
+                <span class="stat-label">Velocity</span>
+                <div class="stat-bar-container">
+                    <div class="stat-bar" data-width="{{ pitcher.speed }}"></div>
+                </div>
+                <span class="stat-value">{{ lineup.pitcher.speed }}</span>
             </div>
-            <div class="player-info">
-                <p class="player-name">{{ pitcher.player_name }}</p>
+            <div class="stat-item">
+                <span class="stat-label">Control</span>
+                <div class="stat-bar-container">
+                    <div class="stat-bar" data-width="{{ pitcher.control }}"></div>
+                </div>
+                <span class="stat-value">{{ lineup.pitcher.control }}</span>
             </div>
-            <div class="stats-container">
-                <div class="stat-item">
-                    <span class="stat-label">Velocity</span>
-                    <div class="stat-bar-container">
-                        <div class="stat-bar" data-width="{{ pitcher.speed }}"></div>
-                    </div>
-                    <span class="stat-value">{{ pitcher.speed }}</span>
+            <div class="stat-item">
+                <span class="stat-label">Stamina</span>
+                <div class="stat-bar-container">
+                    <div class="stat-bar" data-width="{{ pitcher.stamina }}"></div>
                 </div>
-                <div class="stat-item">
-                    <span class="stat-label">Control</span>
-                    <div class="stat-bar-container">
-                        <div class="stat-bar" data-width="{{ pitcher.control }}"></div>
-                    </div>
-                    <span class="stat-value">{{ pitcher.control }}</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-label">Stamina</span>
-                    <div class="stat-bar-container">
-                        <div class="stat-bar" sdata-width="{{ pitcher.stamina }}"></div>
-                    </div>
-                    <span class="stat-value">{{ pitcher.stamina }}</span>
-                </div>
+                <span class="stat-value">{{ lineup.pitcher.stamina }}</span>
             </div>
         </div>
-    {% else %}
-    {% endif %}
+    </div>
 </div>
