@@ -1,42 +1,34 @@
 {% load static %}
 {% load custom_filters %}
 <div class="w-48 p-2">
-    <div class="flex justify-center">
-        <img src="https://sports-phinf.pstatic.net/player/kbo/default/{{ lineup.hitter.player_id }}.png?type=w150"
-            alt="{{ lineup.hitter.player_name }}"
-            class="w-24">
-    </div>
-    <div class="flex justify-center">
-        <p class="mx-2">{{ lineup.hitter.player_name }}</p>
-    </div>
     <div class="">
         <div class="flex items-center">
             <span class="ml-2 w-10">Pow</span>
             <div class="bg-gray/100 h-5 flex-1 max-w-24">
                 <div class="bar-style h-full rounded" style="width: {{ lineup.hitter.power|percent }}%;"></div>
             </div>
-            <span class="stat-value ml-2">{{ lineup.hitter.power|percent }}</span>
+            <span class="stat-value ml-3">{{ lineup.hitter.power|percent }}</span>
         </div>
         <div class="flex items-center">
             <span class="ml-2 w-10">Con</span>
             <div class="bg-gray/100 h-5 flex-1 max-w-24">
                 <div class="bar-style h-full rounded" style="width: {{ lineup.hitter.contact|percent }}%;"></div>
             </div>
-            <span class="stat-value ml-2">{{ lineup.hitter.contact|percent }}</span>
+            <span class="stat-value ml-3">{{ lineup.hitter.contact|percent }}</span>
         </div>
         <div class="flex items-center">
             <span class="ml-2 w-10">Spd</span>
             <div class="bg-gray/100 h-5 flex-1 max-w-24">
                 <div class="bar-style h-full rounded" style="width: {{ lineup.hitter.speed|percent }}%;"></div>
             </div>
-            <span class="stat-value ml-2">{{ lineup.hitter.speed|percent }}</span>
+            <span class="stat-value ml-3">{{ lineup.hitter.speed|percent }}</span>
         </div>
         <div class="flex items-center">
             <span class="ml-2 w-10">Eye</span>
             <div class="bg-gray/100 h-5 flex-1 max-w-24">
                 <div class="bar-style h-full rounded" style="width: {{ lineup.hitter.speed|percent }}%;"></div>
             </div>
-            <span class="stat-value ml-2">{{ lineup.hitter.speed|percent }}</span>
+            <span class="stat-value ml-3">{{ lineup.hitter.speed|percent }}</span>
         </div>
     </div>
 </div>

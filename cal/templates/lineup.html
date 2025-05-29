@@ -11,19 +11,25 @@
     {% include '_nav.html' %}
     {% block body %}
     {% if has_lineup and game %}
-        <div class="flex justify-between gap-8 px-10">
+        <div class="gird flex justify-between gap-8 px-10">
             <!-- 우리 팀 라인업 -->
             <div class="w-1/2">
                 <img src="{% static 'images/team/' %}{{ user.team }}.svg" alt="우리팀 라인업" class="h-16">
                 <hr>
                 <p>{{ user.team }}</p>
-                {% for lineup in user_lineup %}
-                    {% if lineup.batting_order == 1 %}
-                        <p>선발투수: {% include '_pcard.html' %}</p>
-                    {% else %}
-                        <p>{{ lineup.batting_order|add:"-1" }}번: {{ lineup.hitter.player_name }}</p>
-                    {% endif %}
-                {% endfor %}
+                <div class="pl-40 pr-10">
+                    {% for lineup in user_lineup %}
+                        {% if lineup.batting_order == 1 %}
+                            <div class="flex justify-center">{% include '_my_pcard.html' %}</div>
+                        {% else %}
+                            <div class="flex items-center">
+                                <span class="relative -top-[11px] text-sm mr-1">{{ lineup.batting_order|add:"-1" }}</span>
+                                {% include '_hface.html' %}
+                                {% include '_my_hcard.html' %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
 
             <!-- 상대 팀 라인업 -->
@@ -31,13 +37,19 @@
                 <img src="{% static 'images/team/' %}{{ opponent_team }}.svg" alt="상대팀 라인업" class="h-16">
                 <hr>
                 <p>{{ opponent_team }}</p>
-                {% for lineup in opponent_lineup %}
-                    {% if lineup.batting_order == 1 %}
-                        <p>선발투수: {% include '_pcard.html' %}</p>
-                    {% else %}
-                        <p>{{ lineup.batting_order|add:"-1" }}번: {{ lineup.hitter.player_name }}</p>
-                    {% endif %}
-                {% endfor %}
+                <div class="pr-40 pl-10">
+                    {% for lineup in opponent_lineup %}
+                        {% if lineup.batting_order == 1 %}
+                            <div class="flex justify-center">{% include '_your_pcard.html' %}</div>
+                        {% else %}
+                            <div class="flex items-center justify-end">
+                                {% include '_your_hcard.html' %}
+                                {% include '_hface.html' %}
+                                <span class="relative -top-[11px] text-sm mr-1">{{ lineup.batting_order|add:"-1" }}</span>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
         </div>
 

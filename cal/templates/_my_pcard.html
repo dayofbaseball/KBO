@@ -1,6 +1,5 @@
 {% load static %}
 {% load custom_filters %}
-
 <div class="w-48 p-2">
     <div class="flex justify-center">
         <img src="https://sports-phinf.pstatic.net/player/kbo/default/{{ lineup.pitcher.player_id }}.png?type=w150"
@@ -23,7 +22,7 @@
             <div class="bg-gray/100 h-5 flex-1 max-w-24">
                 <div class="bar-style h-full rounded" style="width: {{ lineup.pitcher.speed|speed_percent }}%;"></div>
             </div>
-            <span class="stat-value ml-2">{{ lineup.pitcher.speed }}</span>
+            <span class="stat-value ml-2">{{ lineup.pitcher.speed|speed_percent }}</span>
         </div>
         <div class="flex items-center">
             <span class="ml-2 w-10">Con</span>

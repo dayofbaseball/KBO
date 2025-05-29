@@ -1,0 +1,53 @@
+{% load static %}
+{% load custom_filters %}
+<div class="w-48 p-2">
+    <div class="flex justify-center">
+        <img src="https://sports-phinf.pstatic.net/player/kbo/default/{{ lineup.pitcher.player_id }}.png?type=w150"
+            alt="{{ lineup.pitcher.player_name }}"
+            class="w-24">
+    </div>
+    <div class="flex justify-center">
+        <p class="mx-2">{{ lineup.pitcher.player_name }}</p>
+    </div>
+    <div class="">
+        <div class="flex items-center">
+            <span class="stat-value ml-2">{{ lineup.pitcher.stamina|percent }}</span>
+            <div class="bg-gray/100 h-5 flex-1 max-w-24 flex justify-end">
+                <div class="bar-style h-full rounded" style="width: {{ lineup.pitcher.stamina|percent }}%;"></div>
+            </div>
+            <span class="ml-2 w-10">Sta</span>
+        </div>
+        <div class="flex items-center">
+            <span class="stat-value ml-2">{{ lineup.pitcher.speed|speed_percent }}</span>
+            <div class="bg-gray/100 h-5 flex-1 max-w-24 flex justify-end">
+                <div class="bar-style h-full rounded" style="width: {{ lineup.pitcher.speed|speed_percent }}%;"></div>
+            </div>
+            <span class="ml-2 w-10">Vel</span>
+        </div>
+        <div class="flex items-center">
+            <span class="stat-value ml-2">{{ lineup.pitcher.control|percent }}</span>
+            <div class="bg-gray/100 h-5 flex-1 max-w-24 flex justify-end">
+                <div class="bar-style h-full rounded" style="width: {{ lineup.pitcher.control|percent }}%;"></div>
+            </div>
+            <span class="ml-2 w-10">Con</span>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const bars = document.querySelectorAll('.bar-style');
+    bars.forEach(bar => {
+        const widthPercent = parseFloat(bar.style.width);
+        bar.classList.remove('bg-blue-300', 'bg-blue-500', 'bg-purple-500');
+
+        if (widthPercent >= 90) {
+            bar.classList.add('bg-purple-500');
+        } else if (widthPercent >= 80) {
+            bar.classList.add('bg-blue-500');
+        } else {
+            bar.classList.add('bg-blue-300');
+        }
+    });
+});
+</script>
