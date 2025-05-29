@@ -1,36 +1,36 @@
 {% load static %}
-<div class="pitcher-card">
-    <div class="card-layout-vertical">
-        <div class="flex justify-center">
-            <img src="https://sports-phinf.pstatic.net/player/kbo/default/{{ lineup.pitcher.player_id }}.png?type=w150"
-                alt="{{ lineup.pitcher.player_name }}" 
-                class="player-image">
+{% load custom_filters %}
+
+<div class="w-72 p-2 bg-green-100">
+    <div class="flex justify-center">
+        <img src="https://sports-phinf.pstatic.net/player/kbo/default/{{ lineup.pitcher.player_id }}.png?type=w150"
+            alt="{{ lineup.pitcher.player_name }}"
+            class="player-image">
+    </div>
+    <div class="flex justify-center">
+        <p class="mx-2">{{ lineup.pitcher.player_name }}</p>
+    </div>
+    <div class="">
+        <div class="flex items-center">
+            <span class="ml-2 w-20">Stamina</span>
+            <div class="bg-gray-200 h-6 rounded flex-1 max-w-32">
+                <div class="bg-blue-500 h-full rounded" style="width: {{ stamina_percent }}%;"></div>
+            </div>
+            <span class="stat-value ml-2">{{ stamina_percent }}</span>
         </div>
-        <div class="player-info">
-            <p class="player-name">{{ lineup.pitcher.player_name }}</p>
+        <div class="flex items-center">
+            <span class="ml-2 w-20">Velocity</span>
+            <div class="bg-gray-200 h-6 rounded flex-1 max-w-32">
+                <div class="bg-blue-500 h-6 rounded" style="width: {{ normalized_velocity }}%;"></div>
+            </div>
+            <span class="stat-value ml-2">{{ lineup.pitcher.speed }}</span>
         </div>
-        <div class="stats-container">
-            <div class="stat-item">
-                <span class="stat-label">Velocity</span>
-                <div class="stat-bar-container">
-                    <div class="stat-bar" data-width="{{ pitcher.speed }}"></div>
-                </div>
-                <span class="stat-value">{{ lineup.pitcher.speed }}</span>
+        <div class="flex items-center">
+            <span class="ml-2 w-20">Control</span>
+            <div class="bg-gray-200 h-6 rounded flex-1 max-w-32">
+                <div class="bg-blue-500 h-6 rounded" style="width: {{ control_percent }}%;"></div>
             </div>
-            <div class="stat-item">
-                <span class="stat-label">Control</span>
-                <div class="stat-bar-container">
-                    <div class="stat-bar" data-width="{{ pitcher.control }}"></div>
-                </div>
-                <span class="stat-value">{{ lineup.pitcher.control }}</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-label">Stamina</span>
-                <div class="stat-bar-container">
-                    <div class="stat-bar" data-width="{{ pitcher.stamina }}"></div>
-                </div>
-                <span class="stat-value">{{ lineup.pitcher.stamina }}</span>
-            </div>
+            <span class="stat-value ml-2">{{ lineup.pitcher.control|percent }}</span>
         </div>
     </div>
 </div>

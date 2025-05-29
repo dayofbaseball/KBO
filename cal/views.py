@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from datetime import datetime, timedelta, date
 from django.utils.safestring import mark_safe
+from django.db.models import Max
 import calendar
 from .models import *
 from .utils import Calendar
@@ -53,7 +54,13 @@ def next_month(d):
 def lineup(request, game_id):
     game = Game.objects.get(id=game_id)
     lineups = Lineup.objects.filter(game=game).order_by('id')
+    lineup = Lineup.objects.filter(game=game).first()
     user_team = request.user.team
+    stamina_percent = int(lineup.pitcher.stamina * 100)
+    control_percent = int(lineup.pitcher.control * 100)
+    max_speed_data = Pitcher.objects.aggregate(max_speed=Max('speed'))
+    max_speed = 154
+    min_speed = 130
 
     # 선발투수 2명 위치 파악 (batting_order == 1)
     pitcher_indexes = [i for i, l in enumerate(lineups) if l.batting_order == 1]
@@ -73,13 +80,25 @@ def lineup(request, game_id):
         user_lineup = home_lineup
         opponent_lineup = away_lineup
 
+    pitcher = lineup.pitcher
+
+    if pitcher:
+        raw_speed = pitcher.speed
+        normalized_velocity = max(0, min(100, ((raw_speed - min_speed) / (max_speed - min_speed)) * 100))
+
     context = {
         'game': game,
+        'lineup': lineup,
         'user_lineup': user_lineup,
         'opponent_lineup': opponent_lineup,
         'user_team': user_team,
         'away_team': game.team1,
         'home_team': game.team2,
+        'game': game,
+        'pitcher': pitcher,
+        'stamina_percent': stamina_percent,
+        'control_percent': control_percent,
+        'normalized_velocity': normalized_velocity,
     }
     return render(request, 'lineup.html', context)
 
@@ -94,14 +113,3 @@ def attendance(request, game_id):
         game.attendance_users.add(user)
 
     return redirect('cal:lineup', game_id=game_id)
-
-def pitcher_in_lineup(request, game_id):
-    game = Game.objects.get(id=game_id)
-    pitcher_lineup = Lineup.objects.filter(game=game, batting_order=1).first()
-    
-    if pitcher_lineup and pitcher_lineup.pitcher:
-        pitcher_data = {
-            'pitcher': pitcher_lineup.pitcher,
-            'game': game,
-        }
-    return render(request, '_pcard.html', pitcher_data)
