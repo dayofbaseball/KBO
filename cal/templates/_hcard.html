@@ -1,47 +1,51 @@
 {% load static %}
 {% load custom_filters %}
-
 <div class="w-48 p-2">
     <div class="flex justify-center">
-        <img src="https://sports-phinf.pstatic.net/player/kbo/default/{{ lineup.pitcher.player_id }}.png?type=w150"
-            alt="{{ lineup.pitcher.player_name }}"
+        <img src="https://sports-phinf.pstatic.net/player/kbo/default/{{ lineup.hitter.player_id }}.png?type=w150"
+            alt="{{ lineup.hitter.player_name }}"
             class="w-24">
     </div>
     <div class="flex justify-center">
-        <p class="mx-2">{{ lineup.pitcher.player_name }}</p>
+        <p class="mx-2">{{ lineup.hitter.player_name }}</p>
     </div>
     <div class="">
         <div class="flex items-center">
-            <span class="ml-2 w-10">Sta</span>
+            <span class="ml-2 w-10">Pow</span>
             <div class="bg-gray/100 h-5 flex-1 max-w-24">
-                <div class="bar-style h-full rounded" style="width: {{ lineup.pitcher.stemina|percent }}%;"></div>
+                <div class="bar-style h-full rounded" style="width: {{ lineup.hitter.power|percent }}%;"></div>
             </div>
-            <span class="stat-value ml-2">{{ lineup.pitcher.stemina|percent }}</span>
-        </div>
-        <div class="flex items-center">
-            <span class="ml-2 w-10">Vel</span>
-            <div class="bg-gray/100 h-5 flex-1 max-w-24">
-                <div class="bar-style h-full rounded" style="width: {{ lineup.pitcher.speed|speed_percent }}%;"></div>
-            </div>
-            <span class="stat-value ml-2">{{ lineup.pitcher.speed }}</span>
+            <span class="stat-value ml-2">{{ lineup.hitter.power|percent }}</span>
         </div>
         <div class="flex items-center">
             <span class="ml-2 w-10">Con</span>
             <div class="bg-gray/100 h-5 flex-1 max-w-24">
-                <div class="bar-style h-full rounded" style="width: {{ lineup.pitcher.control|percent }}%;"></div>
+                <div class="bar-style h-full rounded" style="width: {{ lineup.hitter.contact|percent }}%;"></div>
             </div>
-            <span class="stat-value ml-2">{{ lineup.pitcher.control|percent }}</span>
+            <span class="stat-value ml-2">{{ lineup.hitter.contact|percent }}</span>
+        </div>
+        <div class="flex items-center">
+            <span class="ml-2 w-10">Spd</span>
+            <div class="bg-gray/100 h-5 flex-1 max-w-24">
+                <div class="bar-style h-full rounded" style="width: {{ lineup.hitter.speed|percent }}%;"></div>
+            </div>
+            <span class="stat-value ml-2">{{ lineup.hitter.speed|percent }}</span>
+        </div>
+        <div class="flex items-center">
+            <span class="ml-2 w-10">Eye</span>
+            <div class="bg-gray/100 h-5 flex-1 max-w-24">
+                <div class="bar-style h-full rounded" style="width: {{ lineup.hitter.speed|percent }}%;"></div>
+            </div>
+            <span class="stat-value ml-2">{{ lineup.hitter.speed|percent }}</span>
         </div>
     </div>
 </div>
-
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const bars = document.querySelectorAll('.bar-style');
     bars.forEach(bar => {
         const widthPercent = parseFloat(bar.style.width);
         bar.classList.remove('bg-blue-300', 'bg-blue-500', 'bg-purple-500');
-
         if (widthPercent >= 90) {
             bar.classList.add('bg-purple-500');
         } else if (widthPercent >= 80) {
