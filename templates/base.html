@@ -22,32 +22,61 @@
     {% block body %}
     {% endblock %}
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const toggleBtn = document.querySelector('button[aria-controls="mobile-menu"]');
-        const openIcon = toggleBtn.querySelectorAll('svg')[0];
-        const closeIcon = toggleBtn.querySelectorAll('svg')[1];
-        const mobileMenu = document.getElementById('mobile-menu');
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleBtn = document.getElementById('mobile-menu-toggle');
+    const openIcon = document.getElementById('menu-open-icon');
+    const closeIcon = document.getElementById('menu-close-icon');
+    const mobileMenu = document.getElementById('mobile-menu');
+    let scrollY = 0;
 
-        toggleBtn.addEventListener('click', () => {
-        const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+    toggleBtn.addEventListener('click', () => {
+        const isOpen = toggleBtn.getAttribute('aria-expanded') === 'true';
 
-        toggleBtn.setAttribute('aria-expanded', !isExpanded);
-        openIcon.classList.toggle('hidden', !isExpanded);
-        closeIcon.classList.toggle('hidden', isExpanded);
-        mobileMenu.classList.toggle('hidden');
-        });
-        // 화면 리사이즈 시 메뉴 닫기
-        window.addEventListener('resize', () => {
-        if (window.innerWidth >= 768) {
-            // md 이상일 경우 메뉴 닫힘 상태로 초기화
-            toggleBtn.setAttribute('aria-expanded', 'false');
-            openIcon.classList.remove('hidden');
-            closeIcon.classList.add('hidden');
-            mobileMenu.classList.add('hidden');
+        if (!isOpen) {
+        scrollY = window.scrollY;
+        document.body.style.position = 'fixed';
+        document.body.style.top = `-${scrollY}px`;
+        document.body.style.left = '0';
+        document.body.style.right = '0';
+        document.body.style.overflowY = 'scroll';
+        document.body.style.width = '100%';
+
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        openIcon.classList.add('hidden');
+        closeIcon.classList.remove('hidden');
+        mobileMenu.classList.remove('hidden');
+        } else {
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.left = '';
+        document.body.style.right = '';
+        document.body.style.overflowY = '';
+        document.body.style.width = '';
+
+        window.scrollTo(0, scrollY);
+
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        openIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+        mobileMenu.classList.add('hidden');
         }
-        });
     });
-    </script>
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768) {
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        openIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+        mobileMenu.classList.add('hidden');
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.overflowY = '';
+        document.body.style.width = '';
+    }
+  });
+});
+</script>
+
 </body>
 </html>
