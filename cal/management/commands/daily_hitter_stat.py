@@ -5,28 +5,20 @@ from django.conf import settings
 from cal.models import Hitter_Daily, Game, Hitter
 
 class Command(BaseCommand):
-    help = 'records.csv 파일을 Hitter_Daily 모델에 저장'
-
-    def handle(self, *args, **kwargs):
+    def handle(self):
         file_path = settings.BASE_DIR / 'data' / 'hitters_records.csv'
-
         with open(file_path, 'r', encoding='utf-8-sig') as f:
             reader = csv.DictReader(f)
             total, success, failed = 0, 0, 0
-
             for row in reader:
                 total += 1
-
                 try:
                     game = Game.objects.get(id=int(row['game_id']))
                     player_id = Hitter.objects.get(player_id=row['player_id'])
-
                 except Game.DoesNotExist:
                     self.stdout.write(self.style.WARNING(f"❗ Game ID {row['game_id']} 없음 → 건너뜀"))
                     failed += 1
                     continue
-
-
                 try:
                     Hitter_Daily.objects.create(
                         game_id=game,

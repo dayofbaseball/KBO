@@ -1,12 +1,10 @@
 import csv
 from django.core.management.base import BaseCommand
-from cal.models import Lineup, Game, Hitter, Pitcher, Stadium  # Stadium import 추가
+from cal.models import Lineup, Game, Hitter, Pitcher, Stadium
 from django.conf import settings
 
 class Command(BaseCommand):
-    help = 'Import or update lineups from CSV'
-
-    def handle(self, *args, **kwargs):
+    def handle(self):
         csv_file_path = settings.BASE_DIR / 'data' / 'lineups.csv'
         with open(csv_file_path, encoding='utf-8-sig', newline='') as f:
             reader = csv.DictReader(f)
@@ -16,7 +14,7 @@ class Command(BaseCommand):
                 game_obj = Game.objects.get(pk=str(row['game_id']))
                 hitter_obj = Hitter.objects.get(pk=str(row['hitter_id']))
                 pitcher_obj = Pitcher.objects.get(pk=str(row['pitcher_id']))
-                stadium_obj = Stadium.objects.get(stadium=row['stadium'])  # Stadium 인스턴스 가져오기
+                stadium_obj = Stadium.objects.get(stadium=row['stadium'])
                 print(game_obj, hitter_obj, pitcher_obj, int(row['batting_order']), stadium_obj)
 
                 obj, created = Lineup.objects.update_or_create(

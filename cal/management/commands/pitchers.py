@@ -4,9 +4,7 @@ from django.conf import settings
 import csv
 
 class Command(BaseCommand):
-    help = 'Import all pitcher stats from CSV into Pitcher model'
-
-    def handle(self, *args, **kwargs):
+    def handle(self):
         csv_file_path = settings.BASE_DIR / 'data' / 'all_pitcher_stats.csv'
         with open(csv_file_path, newline='', encoding='utf-8-sig') as csvfile:
             reader = csv.DictReader(csvfile)

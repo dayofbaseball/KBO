@@ -4,9 +4,7 @@ from django.conf import settings
 import csv
 
 class Command(BaseCommand):
-    help = 'Import all hitter stats from CSV into Hitter model'
-
-    def handle(self, *args, **kwargs):
+    def handle(self):
         csv_file_path = settings.BASE_DIR / 'data' / 'all_hitter_stats.csv'
         with open(csv_file_path, newline='', encoding='utf-8-sig') as csvfile:
             reader = csv.DictReader(csvfile)
